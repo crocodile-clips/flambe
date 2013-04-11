@@ -32,6 +32,11 @@ class System
     public static var stage (get, null) :StageSystem;
 
     /**
+     * A renderer instance from the platform for fine-grained rendering control.
+     */
+    public static var renderer (get, null) :Renderer;
+
+    /**
      * The Storage subsystem, for persisting values.
      */
     public static var storage (get, null) :StorageSystem;
@@ -115,10 +120,10 @@ class System
     /**
      * Starts up Flambe, this should usually be the first thing a game does.
      */
-    public static function init ()
+    public static function init (?context:Context)
     {
         if (!_calledInit) {
-            _platform.init();
+            _platform.init(context);
             _calledInit = true;
         }
     }
@@ -170,6 +175,12 @@ class System
     {
         #if debug assertCalledInit(); #end
         return _platform.getStage();
+    }
+
+    inline private static function get_renderer () :Renderer
+    {
+        #if debug assertCalledInit(); #end
+        return _platform.getRenderer();
     }
 
     inline private static function get_storage () :StorageSystem
