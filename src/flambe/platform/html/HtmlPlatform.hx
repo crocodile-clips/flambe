@@ -29,7 +29,11 @@ class HtmlPlatform
 
     public function init (?context:Context)
     {
+<<<<<<< HEAD
         HtmlUtil.fixAndroidMath();
+=======
+        Log.info("Initializing HTML platform");
+>>>>>>> 0efb14a... Initial support for shared drawing contexts
 
         var canvas:CanvasElement = null;
         if(context == null) {

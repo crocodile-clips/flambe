@@ -8,10 +8,16 @@ import flambe.animation.AnimatedFloat;
 import flambe.asset.AssetPack;
 import flambe.asset.Manifest;
 import flambe.display.Texture;
+import flambe.subsystem.*;
+import flambe.external.External;
+import flambe.input.Keyboard;
+import flambe.input.Mouse;
+import flambe.input.Pointer;
+import flambe.input.Touch;
 import flambe.platform.Context;
 import flambe.platform.Platform;
 import flambe.platform.Renderer;
-import flambe.subsystem.*;
+import flambe.storage.Storage;
 import flambe.util.Assert;
 import flambe.util.Logger;
 import flambe.util.Promise;
@@ -32,6 +38,11 @@ class System
      * The Stage subsystem, for controlling the display viewport.
      */
     public static var stage (get, null) :StageSystem;
+
+    /**
+     * A renderer instance from the platform for fine-grained rendering control.
+     */
+    public static var renderer (get, null) :Renderer;
 
     /**
      * A renderer instance from the platform for fine-grained rendering control.
