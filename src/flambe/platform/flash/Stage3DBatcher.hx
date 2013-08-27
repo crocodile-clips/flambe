@@ -174,7 +174,7 @@ class Stage3DBatcher
         ]));
         ortho.transformVectors(scratch, scratch);
 
-        var offset = prepareDrawImage(null, Copy, null, texture);
+        var offset = prepareDrawImage(null, Copy, null, source);
         data[  offset] = scratch[0];
         data[++offset] = scratch[1];
         data[++offset] = 0;
