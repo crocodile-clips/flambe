@@ -516,7 +516,11 @@ private class ConfigPair
 
     public function getInt () :Int
     {
-        return Std.parseInt(_value);
+		if (_value.fastCodeAt(0) == "\"".code) {
+            return Std.parseInt(_value.substr(1, _value.length-2));
+        } else {
+			return Std.parseInt(_value);
+		}
     }
 
     public function getString () :String
