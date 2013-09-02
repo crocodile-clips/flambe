@@ -110,7 +110,7 @@ class Stage3DTexture extends BasicAsset<Stage3DTexture>
         }
 
         // Load the pixels into a BitmapData
-        var bitmapData = new BitmapData(sourceWPow2, sourceHPow2, true, 0x00000000);
+        var bitmapData = new BitmapData(sourceWPow2, sourceHPow2);
         bitmapData.setPixels(new Rectangle(0, 0, sourceW, sourceH), copy.getData());
         drawBorder(bitmapData, sourceW, sourceH);
 
@@ -130,8 +130,9 @@ class Stage3DTexture extends BasicAsset<Stage3DTexture>
 
     public function getColorBounds(mask :Int, color :Int, ?negate = false) :flambe.math.Rectangle
     {
+		trace(color);
         var bitmapData = _renderer.batcher.readPixels(this, 0, 0, width, height);
-        var bounds = bitmapData.getColorBoundsRect(mask, color, !negate);
+		var bounds = bitmapData.getColorBoundsRect(mask, color, !negate);
         return new flambe.math.Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);
     }
 

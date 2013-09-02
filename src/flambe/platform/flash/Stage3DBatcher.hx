@@ -111,7 +111,7 @@ class Stage3DBatcher
 
         // Prepare to iterate through stageWidth x stageHeight rectangles
         var stage = Lib.current.stage;
-        var result = new BitmapData(width, height);
+        var result = new BitmapData(width, height, true);
         var sourceRect = new Rectangle(0, 0, Math.min(width, stage.stageWidth),
           Math.min(height, stage.stageHeight));
         var targetPoint = new Point(0, 0);
@@ -207,7 +207,7 @@ class Stage3DBatcher
         // Create a temporary back buffer of the given size, and draw the texture on it
         _context3D.configureBackBuffer(width, height, 2, false);
         _context3D.setRenderToBackBuffer();
-        _context3D.clear(0, 0, 0, 0);
+        _context3D.clear(0,0,0,0);
         _lastRenderTarget = _currentRenderTarget = null;
         flush();
 
