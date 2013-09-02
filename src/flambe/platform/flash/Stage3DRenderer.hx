@@ -21,8 +21,6 @@ import flambe.util.Assert;
 class Stage3DRenderer
     implements Renderer
 {
-    public var graphics :InternalGraphics = null;
-
     public var batcher (default, null) :Stage3DBatcher;
 
     public function new (?context:Stage3DContext)
@@ -93,17 +91,21 @@ class Stage3DRenderer
         return new Stage3DGraphics(batcher, renderTarget);
     }
 
-    public function willRender ()
+    public function willRender () :Graphics
     {
 #if flambe_debug_renderer
         trace(">>> begin");
 #end
-        graphics.willRender();
+        if (_graphics == null) {
+            return null;
+        }
+        batcher.willRender();
+        return _graphics;
     }
 
     public function didRender ()
     {
-        graphics.didRender();
+        batcher.didRender();
 #if flambe_debug_renderer
         trace("<<< end");
 #end
@@ -133,9 +135,10 @@ class Stage3DRenderer
         Log.info("Using exclusive context", ["driver", _context.context3D.driverInfo]);
       }
 
-      batcher = new Stage3DBatcher(_context);
-      graphics = createGraphics(null);
-      onResize(null);
+
+  	  batcher = new Stage3DBatcher(_context3D);
+	  _graphics = createGraphics(null);
+	  onResize(null);
 
      // Signal that the GPU context was (re)created
       System.hasGPU._ = false;
@@ -149,13 +152,13 @@ class Stage3DRenderer
 
     private function onResize (_)
     {
-        if (graphics != null) {
+        if (_context3D != null) {
             var stage = Lib.current.stage;
-            batcher.resizeBackbuffer(stage.stageWidth, stage.stageHeight);
-            graphics.onResize(stage.stageWidth, stage.stageHeight);
+            _context3D.configureBackBuffer(stage.stageWidth, stage.stageHeight, 2, false);
+            _graphics.reset(stage.stageWidth, stage.stageHeight);
         }
     }
 
-    private var _context :Context;
+    private var _context3D :Context3D;
     private var _graphics :Stage3DGraphics;
 }

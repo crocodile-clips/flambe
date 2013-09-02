@@ -248,12 +248,6 @@ class HtmlPlatform
                 update(HtmlUtil.now());
             }, 16); // ~60 FPS
         }
-
-#if debug
-        new DebugLogic(this);
-        _catapult = HtmlCatapultClient.canUse() ? new HtmlCatapultClient() : null;
-#end
-        Log.info("Initialized HTML platform", ["renderer", _renderer.getName()]);
     }
 
     public function loadAssetPack (manifest :Manifest) :Promise<AssetPack>

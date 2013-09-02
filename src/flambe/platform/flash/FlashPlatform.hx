@@ -89,12 +89,6 @@ class FlashPlatform
         _lastUpdate = Lib.getTimer();
         _skipFrame = false;
         _timeOffset = Date.now().getTime() - Lib.getTimer();
-
-#if debug
-        new DebugLogic(this);
-        _catapult = FlashCatapultClient.canUse() ? new FlashCatapultClient() : null;
-#end
-        Log.info("Initialized Flash platform", ["renderer", _renderer.getName()]);
     }
 
     public function loadAssetPack (manifest :Manifest) :Promise<AssetPack>

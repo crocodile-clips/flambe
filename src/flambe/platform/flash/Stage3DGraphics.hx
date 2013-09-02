@@ -18,14 +18,14 @@ import flambe.math.FMath;
 import flambe.util.Assert;
 
 class Stage3DGraphics
-    implements InternalGraphics
+    implements Graphics
 {
     public function new (batcher :Stage3DBatcher, renderTarget :Stage3DTexture)
     {
         _batcher = batcher;
         _renderTarget = renderTarget;
 
-        // Call onResize() to set the size first
+        // Call reset() to set the size first
         // _stateList = new DrawingState();
     }
 
@@ -278,17 +278,7 @@ class Stage3DGraphics
         state.applyScissor(x, y, width, height);
     }
 
-    public function willRender ()
-    {
-        _batcher.willRender();
-    }
-
-    public function didRender ()
-    {
-        _batcher.didRender();
-    }
-
-    public function onResize (width :Int, height :Int)
+    public function reset (width :Int, height :Int)
     {
         var ortho = new Matrix3D(Vector.ofArray([
             2/width, 0, 0, 0,

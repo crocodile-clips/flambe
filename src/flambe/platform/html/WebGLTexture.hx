@@ -164,7 +164,7 @@ class WebGLTexture extends BasicAsset<WebGLTexture>
 
         if (_graphics == null) {
             _graphics = new WebGLGraphics(_renderer.batcher, this);
-            _graphics.onResize(width, height);
+            _graphics.reset(width, height);
 
             var gl = _renderer.gl;
             framebuffer = gl.createFramebuffer();

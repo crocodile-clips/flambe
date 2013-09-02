@@ -16,8 +16,6 @@ import flambe.util.Assert;
 class WebGLRenderer
     implements Renderer
 {
-    public var graphics :InternalGraphics;
-
     public var gl (default, null) :RenderingContext;
     public var batcher (default, null) :WebGLBatcher;
 
@@ -75,14 +73,15 @@ class WebGLRenderer
         return null;
     }
 
-    public function willRender ()
+    public function willRender () :Graphics
     {
-        graphics.willRender();
+        batcher.willRender();
+        return _graphics;
     }
 
     public function didRender ()
     {
-        graphics.didRender();
+        batcher.didRender();
     }
 
     public function getName () :String
@@ -92,16 +91,20 @@ class WebGLRenderer
 
     private function onResize ()
     {
-        var width = gl.canvas.width, height = gl.canvas.height;
-        batcher.resizeBackbuffer(width, height);
-        graphics.onResize(width, height);
+        var width = gl.canvas.width;
+        var height = gl.canvas.height;
+
+        batcher.reset(width, height);
+        _graphics.reset(width, height);
     }
 
     private function init ()
     {
         batcher = new WebGLBatcher(gl);
-        graphics = new WebGLGraphics(batcher, null);
+        _graphics = new WebGLGraphics(batcher, null);
         onResize();
         System.hasGPU._ = true;
     }
+
+    private var _graphics :WebGLGraphics;
 }
