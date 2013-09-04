@@ -130,7 +130,6 @@ class Stage3DTexture extends BasicAsset<Stage3DTexture>
 
     public function getColorBounds(mask :Int, color :Int, ?negate = false) :flambe.math.Rectangle
     {
-		trace(color);
         var bitmapData = _renderer.batcher.readPixels(this, 0, 0, width, height);
 		var bounds = bitmapData.getColorBoundsRect(mask, color, !negate);
         return new flambe.math.Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);

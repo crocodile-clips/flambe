@@ -18,7 +18,7 @@ var HAXE_COMPILER_PORT = 6000;
 var HTTP_PORT = 7000;
 var SOCKET_PORT = HTTP_PORT+1;
 
-exports.PLATFORMS = ["html", "flash", "android", "ios"];
+exports.PLATFORMS = ["html", "flash", "android", "ios", "swc"];
 
 exports.VERSION = JSON.parse(fs.readFileSync(__dirname + "/package.json")).version;
 
@@ -177,7 +177,7 @@ exports.build = function (config, platforms, opts) {
     };
 
     var buildHtml = function () {
-        var htmlFlags = ["-D", "html"];
+        var htmlFlags = ["-D", "html", "-main", get(config, "main")];
         var unminified = CACHE_DIR+"main-html.unminified.js";
         var js = "build/web/targets/main-html.js";
 
@@ -208,8 +208,7 @@ exports.build = function (config, platforms, opts) {
     var buildFlash = function () {
         var swf = "build/web/targets/main-flash.swf";
         var flashFlags = swfFlags(false).concat([
-            "-swf-version", "11", "-swf", swf]);
-
+            "-swf-version", "11", "-swf", swf, "-main", get(config, "main")]);
         return prepareWeb()
         .then(function () { return prepareAssets("build/web/assets") })
         .then(function (assetFlags) {
@@ -217,10 +216,21 @@ exports.build = function (config, platforms, opts) {
             return haxe(commonFlags.concat(assetFlags).concat(flashFlags));
         });
     };
+	
+	var buildSwc = function() {
+		var swc = "build/web/targets/main-flash.swc";
+		var flashFlags = swfFlags(false).concat([
+		    "-swf-version", "11", "-swf", swc]);
+		var swcFlags = toArray(get(config, "swc_flags", []))
+        return prepareAssets("build/web/assets")
+		.then(function (assetFlags) {
+            console.log("Building: " + swc);
+            return haxe(commonFlags.concat(assetFlags).concat(flashFlags).concat(swcFlags));
+        });
+	}
 
     var buildAir = function (flags) {
-        var airFlags = swfFlags(true).concat(["-swf-version", "11.7", "-D", "air"]);
-
+        var airFlags = swfFlags(true).concat(["-swf-version", "11.7", "-D", "air", "-main", get(config, "main")]);
         wrench.mkdirSyncRecursive(CACHE_DIR+"air");
         return prepareAssets(CACHE_DIR+"air/assets")
         .then(function (assetFlags) {
@@ -387,13 +397,12 @@ exports.build = function (config, platforms, opts) {
             }
         }
 
-        commonFlags.push("-main", get(config, "main"));
         commonFlags = commonFlags.concat(toArray(get(config, "haxe_flags", [])));
         commonFlags.push("-lib", "flambe");
         srcPaths.forEach(function (srcDir) {
             commonFlags.push("-cp", srcDir);
         });
-        commonFlags.push("-dce", "full");
+        commonFlags.push("-dce", "no");
         if (debug) {
             commonFlags.push("-debug", "--no-opt", "--no-inline");
         } else {
@@ -406,6 +415,7 @@ exports.build = function (config, platforms, opts) {
             flash: buildFlash,
             android: buildAndroid,
             ios: buildIos,
+			swc: buildSwc
         };
         var promise = Q();
         platforms.forEach(function (platform, idx) {

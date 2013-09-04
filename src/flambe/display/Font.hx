@@ -39,8 +39,8 @@ class Font
 
         reload();
 #if debug
-        _reloadCount = pack.getFile(name + ".fnt").reloadCount;
-        _lastReloadCount = _reloadCount._;
+        //_reloadCount = pack.getFile(name + ".fnt").reloadCount;
+        //_lastReloadCount = _reloadCount._;
 #end
     }
 
@@ -127,7 +127,7 @@ class Font
     }
 
 #if debug
-    @:allow(flambe) function checkReload () :Int
+ /*   @:allow(flambe) function checkReload () :Int
     {
         // If the .fnt file was reloaded since the last check, reload the font
         if (_lastReloadCount != _reloadCount._) {
@@ -135,7 +135,7 @@ class Font
             reload();
         }
         return _lastReloadCount;
-    }
+	} */
 #end
 
     private function reload ()
@@ -225,8 +225,8 @@ class Font
 #if debug
     // Used to track live-reloading updates. A signal listener can't be used here, because we can't
     // guarantee it'll be properly disposed
-    private var _lastReloadCount :Int;
-    private var _reloadCount :Value<Int>;
+    //private var _lastReloadCount :Int;
+    //private var _reloadCount :Value<Int>;
 #end
 }
 

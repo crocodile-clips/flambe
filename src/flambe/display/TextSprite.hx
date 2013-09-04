@@ -120,11 +120,11 @@ class TextSprite extends Sprite
     private function updateLayout ()
     {
 #if debug
-        var reloadCount = _font.checkReload();
+    /*    var reloadCount = _font.checkReload();
         if (reloadCount != _lastReloadCount) {
             _lastReloadCount = reloadCount;
             _flags = _flags.add(Sprite.TEXTSPRITE_DIRTY);
-        }
+        }	*/
 #end
 
         // Recreate the layout if necessary

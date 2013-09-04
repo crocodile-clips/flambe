@@ -135,10 +135,9 @@ class Stage3DRenderer
         Log.info("Using exclusive context", ["driver", _context.context3D.driverInfo]);
       }
 
-
-  	  batcher = new Stage3DBatcher(_context3D);
-	  _graphics = createGraphics(null);
-	  onResize(null);
+      batcher = new Stage3DBatcher(_context);
+      _graphics = createGraphics(null);
+      onResize(null);
 
      // Signal that the GPU context was (re)created
       System.hasGPU._ = false;
@@ -152,13 +151,13 @@ class Stage3DRenderer
 
     private function onResize (_)
     {
-        if (_context3D != null) {
+        if (_context != null) {
             var stage = Lib.current.stage;
-            _context3D.configureBackBuffer(stage.stageWidth, stage.stageHeight, 2, false);
+            _context.context3D.configureBackBuffer(stage.stageWidth, stage.stageHeight, 2, false);
             _graphics.reset(stage.stageWidth, stage.stageHeight);
         }
     }
 
-    private var _context3D :Context3D;
+    private var _context :Context;
     private var _graphics :Stage3DGraphics;
 }

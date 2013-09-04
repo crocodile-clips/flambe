@@ -54,7 +54,7 @@ class Stage3DBatcher
 
         if(!_shared) {
           // And clear it as required by Stage3D
-          _context3D.clear(0, 0, 0);
+          _context3D.clear(0, 0, 0, 0);
         }
     }
 
@@ -132,7 +132,7 @@ class Stage3DBatcher
 
         // Restore the back buffer to its previous state
         _context3D.configureBackBuffer(stage.stageWidth, stage.stageHeight, 2, false);
-        _context3D.clear(0, 0, 0);
+        _context3D.clear(0, 0, 0, 0);
 
         return result;
     }

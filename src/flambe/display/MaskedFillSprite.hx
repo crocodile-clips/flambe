@@ -19,6 +19,7 @@ class MaskedFillSprite extends ImageSprite
         texture.graphics.setBlendMode(Mask);
         texture.graphics.drawImage(mask, 0, 0);
 
+		trace(texture.width, texture.height);
         super(texture);
     }
 }
