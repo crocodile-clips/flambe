@@ -5,7 +5,7 @@
 // https://github.com/aduros/flambe/blob/master/LICENSE.txt
 
 var argparse = require("argparse");
-var flambe = require("flambe");
+var flambe = require("./");
 var fs = require("fs");
 var path = require("path");
 var util = require("util");
