@@ -216,7 +216,7 @@ exports.build = function (config, platforms, opts) {
             return haxe(commonFlags.concat(assetFlags).concat(flashFlags));
         });
     };
-	
+
 	var buildSwc = function() {
 		var swc = "build/web/targets/main-flash.swc";
 		var flashFlags = swfFlags(false).concat([
@@ -402,7 +402,7 @@ exports.build = function (config, platforms, opts) {
         srcPaths.forEach(function (srcDir) {
             commonFlags.push("-cp", srcDir);
         });
-        commonFlags.push("-dce", "no");
+        commonFlags.push("-dce", "full");
         if (debug) {
             commonFlags.push("-debug", "--no-opt", "--no-inline");
         } else {
