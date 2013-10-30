@@ -52,7 +52,7 @@ class HtmlPlatform
         canvas.style.outlineStyle = "none";
 
         // Browser optimization hints
-        canvas.setAttribute("moz-opaque", "true");
+        // canvas.setAttribute("moz-opaque", "true");
         // canvas.style.webkitTransform = "translateZ(0)";
         // canvas.style.backgroundColor = "#000";
 
